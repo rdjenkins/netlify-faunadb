@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ContentEditable from './components/ContentEditable'
 import AppHeader from './components/AppHeader'
+import Org from './components/Org'
 import SettingsMenu from './components/SettingsMenu'
 import SettingsIcon from './components/SettingsIcon'
 import analytics from './utils/analytics'
@@ -37,6 +38,7 @@ export default class App extends Component {
     })
   }
   saveTodo = (e) => {
+    return false
     e.preventDefault()
     const { todos } = this.state
     const todoValue = this.inputElement.value
@@ -272,32 +274,24 @@ export default class App extends Component {
           </button>
         )
       }
-      const boxIcon = (data.completed) ? '#todo__box__done' : '#todo__box'
       return (
-        <div key={i} className='todo-item'>
-          <label className="todo">
-            <input
-              data-id={id}
-              className="todo__state"
-              type="checkbox"
-              onChange={this.handleTodoCheckbox}
-              checked={data.completed}
+        <div key={i} className='XXXtodo-item'>
+            <Org
+                 name={data.name}
+                 postcode={data.postcode}
+                 town={data.town}
+                 county={data.county}
+                 web={data.web}
+                 products_summary={data.products_summary}
+                 produce_type={data.produce_type}
+                 online_ordering={data.online_ordering}
+                 delivery={data.delivery}
+                 new_customers={data.new_customers}
+                 access_pandemic={data.access_pandemic}
+                 workers={data.workers}
+                 supply={data.supply}
+                 network={data.network}
             />
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 25" className="todo__icon">
-              <use xlinkHref={`${boxIcon}`} className="todo__box"></use>
-              <use xlinkHref="#todo__check" className="todo__check"></use>
-            </svg>
-            <div className='todo-list-title'>
-              <ContentEditable
-                tagName='span'
-                editKey={id}
-                onBlur={this.updateTodoTitle} // save on enter/blur
-                html={data.title}
-                // onChange={this.handleDataChange} // save on change
-              />
-            </div>
-          </label>
-          {deleteButton}
         </div>
       )
     })
@@ -310,13 +304,13 @@ export default class App extends Component {
 
         <div className='todo-list'>
           <h2>
-            Create todo
+            Organisations
             <SettingsIcon onClick={this.openModal} className='mobile-toggle' />
           </h2>
           <form className='todo-create-wrapper' onSubmit={this.saveTodo}>
             <input
               className='todo-create-input'
-              placeholder='Add a todo item'
+              placeholder='Search - yet to be coded'
               name='name'
               ref={el => this.inputElement = el}
               autoComplete='off'
@@ -324,7 +318,7 @@ export default class App extends Component {
             />
             <div className='todo-actions'>
               <button className='todo-create-button'>
-                Create todo
+                Search
               </button>
               <SettingsIcon onClick={this.openModal}  className='desktop-toggle' />
             </div>
