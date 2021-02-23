@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ContentEditable from './components/ContentEditable'
 import AppHeader from './components/AppHeader'
 import Org from './components/Org'
 import SettingsMenu from './components/SettingsMenu'
@@ -265,15 +264,6 @@ export default class App extends Component {
     return todosByDate.map((todo, i) => {
       const { data, ref } = todo
       const id = getTodoId(todo)
-      // only show delete button after create API response returns
-      let deleteButton
-      if (ref) {
-        deleteButton = (
-          <button data-id={id} onClick={this.deleteTodo}>
-            delete
-          </button>
-        )
-      }
       return (
         <div key={i} className='XXXtodo-item'>
             <Org

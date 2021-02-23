@@ -2,9 +2,6 @@ import React from 'react'
 import styles from './Org.css' // eslint-disable-line
 
 class Org extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <div className='org'>
