@@ -38,56 +38,6 @@ export default class App extends Component {
   }
   saveTodo = (e) => {
     return false
-    e.preventDefault()
-    const { todos } = this.state
-    const todoValue = this.inputElement.value
-
-    if (!todoValue) {
-      alert('Please add Todo title')
-      this.inputElement.focus()
-      return false
-    }
-
-    // reset input to empty
-    this.inputElement.value = ''
-
-    const todoInfo = {
-      title: todoValue,
-      completed: false,
-    }
-    // Optimistically add todo to UI
-    const newTodoArray = [{
-      data: todoInfo,
-      ts: new Date().getTime() * 10000
-    }]
-
-    const optimisticTodoState = newTodoArray.concat(todos)
-
-    this.setState({
-      todos: optimisticTodoState
-    })
-    // Make API request to create new todo
-    api.create(todoInfo).then((response) => {
-      console.log(response)
-      /* Track a custom event */
-      analytics.track('todoCreated', {
-        category: 'todos',
-        label: todoValue,
-      })
-      // remove temporaryValue from state and persist API response
-      const persistedState = removeOptimisticTodo(todos).concat(response)
-      // Set persisted value to state
-      this.setState({
-        todos: persistedState
-      })
-    }).catch((e) => {
-      console.log('An API error occurred', e)
-      const revertedState = removeOptimisticTodo(todos)
-      // Reset to original state
-      this.setState({
-        todos: revertedState
-      })
-    })
   }
   deleteTodo = (e) => {
     const { todos } = this.state
@@ -262,11 +212,12 @@ export default class App extends Component {
     const todosByDate = todos.sort(sortOrder)
 
     return todosByDate.map((todo, i) => {
-      const { data, ref } = todo
+      const { data } = todo
       const id = getTodoId(todo)
       return (
         <div key={i} className='XXXtodo-item'>
             <Org
+                 id={id}
                  name={data.name}
                  postcode={data.postcode}
                  town={data.town}
